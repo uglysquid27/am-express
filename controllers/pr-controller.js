@@ -1,4 +1,6 @@
 const { Pr_monitoring } = require('../models')
+const { Section_tab } = require('../models')
+const  fs = require( 'fs')
 
 module.exports = {
     index: async (req, res) => {
@@ -42,5 +44,33 @@ module.exports = {
             res.status(500).json(error);
         }
     },
+    delete: async (req, res) => {
+        try {
+          const document = await Pr_monitoring.findOne({
+            where: {
+              id: req.params.id,
+            },
+          });
+          const check = fs.existsSync(`public/${document.item_desc_img}`);
+          if (check) {
+            fs.unlinkSync(`public/${document.item_desc_img}`);
+          }
+          await document.destroy();
+          res.status(200).json({ message: "Data deleted" });
+        } catch (error) {
+            console.log(error);
+          res.status(500).json(error.message);
+        }
+      },
+    
+    section: async (req, res) => {
+        try {
+            const sec = await Section_tab.findAll();
+            res.status(200).json(sec);
+        }catch(e){
+            res.status(500).json(e)
+        }
+    },
+    
     
 }

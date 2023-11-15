@@ -21,10 +21,10 @@ module.exports = function (sequelize, DataTypes) {
           type: DataTypes.STRING,
         },
         section: {
-          type: DataTypes.INTEGER,
+          type: DataTypes.STRING,
         },
         area: {
-          type: DataTypes.INTEGER,
+          type: DataTypes.STRING,
         },
         due_date: {
           type: DataTypes.STRING,

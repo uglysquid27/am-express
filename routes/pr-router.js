@@ -17,8 +17,10 @@ const storage = multer.diskStorage({
 
 /* GET home page. */
 router.get('/', prController.index);
-router.get('/section', prController.section);
-router.delete("/:id", prController.delete);
+router.get('/get/:id', prController.findById);
+router.get('/sect', prController.section);
+router.delete("/delete/:id", prController.delete);
 router.post('/store',  upload.single("item_desc_img"), prController.store);
+router.put('/update/:id', upload.single("item_desc_img"), prController.update);
 
 module.exports = router;

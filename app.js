@@ -6,7 +6,7 @@ var cors = require('cors');
 var indexRouter = require('./routes/index');
 var tesRouter = require('./routes/tes');
 var prRouter = require('./routes/pr-router');
-var usersRouter = require('./routes/users');
+var usersRouter = require('./routes/user-router');
 
 var app = express();
 app.use((req, res, next) => {

@@ -7,10 +7,10 @@
     "dialect": "mysql"
   },
   "test": {
-    "username": "root",
+    "username": "usertable",
     "password": null,
-    "database": "database_test",
-    "host": "127.0.0.1",
+    "database": "aio_employee",
+    "host": "192.168.9.47",
     "dialect": "mysql"
   },
   "production": {

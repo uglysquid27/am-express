@@ -7,5 +7,7 @@ const vwLoginController = require("../controllers/vw-login-controller");
 
 /* GET all table_user data. */
 router.get('/', vwLoginController.index);
+router.get('/get/:id', vwLoginController.indexById);
+router.put('/update/:id', vwLoginController.update);
 
 module.exports = router;

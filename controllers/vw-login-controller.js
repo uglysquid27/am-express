@@ -25,7 +25,6 @@ module.exports = {
                 lg_name: item.lg_name,
                 user_level: item.user_level,
             }));
-            console.log(response)
             res.status(200).json(response);
         } catch (e) {
             console.error(e);
@@ -70,8 +69,9 @@ module.exports = {
         }
     },
     update: async (req, res) => {
+        
         try {
-
+            console.log(req.body)
             const document = await Login.findOne({
                 where: {
                     id: req.params.id,
@@ -88,6 +88,7 @@ module.exports = {
                     },
                 }
             );
+            console.log(updateDocument)
             res.status(200).json(updateDocument);
         } catch (error) {
             console.log(error)

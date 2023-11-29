@@ -1,6 +1,8 @@
 const { log } = require('console');
 // const { input } = require('../models')
 // const { Section_tab } = require('../models')
+const { qpgt } = require('../models/sap_master/qpgt')
+const { qpcd } = require('../models/sap_master/qpcd')
 const { AreaTab } = require('../models/sms/area')
 const { vw_login } = require('../models/sms/table-user');
 const { tInput } = require('../models/sms/input-temuan');
@@ -107,6 +109,27 @@ module.exports = {
     section: async (req, res) => {
         try {
             const sec = await AreaTab.findAll();
+            console.log(sec)
+            res.status(200).json(sec);
+        } catch (e) {
+            console.log(e)
+            res.status(500).json(e)
+        }
+    },
+
+    qpgt: async (req, res) => {
+        try {
+            const sec = await qpgt.findAll();
+            console.log(sec)
+            res.status(200).json(sec);
+        } catch (e) {
+            console.log(e)
+            res.status(500).json(e)
+        }
+    },
+    qpcd: async (req, res) => {
+        try {
+            const sec = await qpcd.findAll();
             console.log(sec)
             res.status(200).json(sec);
         } catch (e) {

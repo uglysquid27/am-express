@@ -23,4 +23,7 @@ router.delete("/delete/:id", temuanController.delete);
 router.post('/store',  upload.single("item_desc_img"), temuanController.store);
 router.put('/update/:id', upload.single("item_desc_img"), temuanController.update);
 
+router.get('/qpgt', temuanController.qpgt);
+router.get('/qpcd', temuanController.qpcd);
+
 module.exports = router;

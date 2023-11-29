@@ -1,12 +1,12 @@
 const { log } = require('console');
-const { Login } = require('../models');
-const { vw_login } = require('../models');
+const { userLevel } = require('../models/sms/user-level');
+const { vw_login } = require('../models/sms/table-user');
 
 module.exports = {
     index: async (req, res) => {
         try {
             const vwLoginData = await vw_login.findAll();
-            const loginData = await Login.findAll();
+            const loginData = await userLevel.findAll();
             const updatedLoginData = [];
 
             for (const loginItem of loginData) {
@@ -34,7 +34,7 @@ module.exports = {
     indexById: async (req, res) => {
         try {
             // Fetch data from Login model based on id
-            const loginData = await Login.findOne({
+            const loginData = await userLevel.findOne({
                 where: {
                     id: req.params.id,
                 },
@@ -72,13 +72,13 @@ module.exports = {
         
         try {
             console.log(req.body)
-            const document = await Login.findOne({
+            const document = await userLevel.findOne({
                 where: {
                     id: req.params.id,
                 },
             });
 
-            const updateDocument = await Login.update(
+            const updateDocument = await userLevel.update(
                 {
                     user_level: req.body.user_level,
                 },

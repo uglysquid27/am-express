@@ -1,5 +1,7 @@
-module.exports = function (sequelize, DataTypes) {
-    const log = sequelize.define(
+const { iot_prod } = require('../../config/connection');
+const { DataTypes } = require('sequelize');
+
+    const userLevel = iot_prod.define(
         "Login",
         {
             id: {
@@ -19,5 +21,8 @@ module.exports = function (sequelize, DataTypes) {
             tableName: "table_user",
         }
     );
-    return log;
-};
+    (async () => {
+        await iot_prod.sync();
+        console.log('Model synchronized with database.');
+    })();
+    module.exports = { iot_prod, userLevel };

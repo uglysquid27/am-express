@@ -1,45 +1,149 @@
 module.exports = function (sequelize, DataTypes) {
-    const tUser = sequelize.define(
-        "userLevel",
+    const tInput = sequelize.define(
+        "input",
         {
-            
-            lg_nik: {
-                type: DataTypes.STRING,
-            },
-            lg_name: {
-                type: DataTypes.STRING,
-            },
-            lg_password: {
-                type: DataTypes.STRING,
-            },
-            lg_location: {
-                type: DataTypes.STRING,
-            },
-            lg_product: {
-                type: DataTypes.STRING,
-            },
-            lg_email_aio: {
+            id: {
+                allowNull: false,
+                autoIncrement: true,
+                primaryKey: true,
                 type: DataTypes.INTEGER,
             },
-            lg_email_private: {
+            finding: {
+                type: DataTypes.STRING,
+            },
+            finding_description: {
+                type: DataTypes.STRING,
+            },
+            photo: {
+                type: DataTypes.STRING,
+            },
+            user: {
+                type: DataTypes.STRING,
+            },
+            tanggal_temuan: {
+                type: DataTypes.STRING,
+            },
+            id_area: {
                 type: DataTypes.INTEGER,
             },
-            lg_aktif: {
+            func_loc: {
+                type: DataTypes.INTEGER,
+            },
+            object_part: {
                 type: DataTypes.STRING,
             },
-            n_photo: {
+            ob_detail: {
                 type: DataTypes.STRING,
             },
-            user_level: {
+            damage: {
                 type: DataTypes.STRING,
             },
-            n_phone: {
+            d_detail: {
+                type: DataTypes.STRING,
+            },
+            cause_code: {
+                type: DataTypes.STRING,
+            },
+            cc_detail: {
+                type: DataTypes.STRING,
+            },
+            level: {
+                type: DataTypes.INTEGER,
+            },
+            kategori: {
+                type: DataTypes.INTEGER,
+            },
+            scope: {
+                type: DataTypes.INTEGER,
+            },
+            status: {
+                type: DataTypes.STRING,
+            },
+            last_update: {
+                type: DataTypes.STRING,
+            },
+            note: {
+                type: DataTypes.STRING,
+            },
+            approve_by: {
+                type: DataTypes.STRING,
+            },
+            approve_date: {
+                type: DataTypes.STRING,
+            },
+            schedule: {
+                type: DataTypes.STRING,
+            },
+            pic: {
+                type: DataTypes.STRING,
+            },
+            photo_type: {
+                type: DataTypes.STRING,
+            },
+            photo_size: {
+                type: DataTypes.STRING,
+            },
+            photo_width: {
+                type: DataTypes.STRING,
+            },
+            photo_height: {
+                type: DataTypes.STRING,
+            },
+            order_type: {
+                type: DataTypes.STRING,
+            },
+            pm_act_type: {
+                type: DataTypes.STRING,
+            },
+            sys_cond: {
+                type: DataTypes.STRING,
+            },
+            basic_start: {
+                type: DataTypes.STRING,
+            },
+            basic_finish: {
+                type: DataTypes.STRING,
+            },
+            report_by: {
+                type: DataTypes.STRING,
+            },
+            main_work_center: {
+                type: DataTypes.STRING,
+            },
+            planner_group: {
+                type: DataTypes.STRING,
+            },
+            plant_section: {
+                type: DataTypes.STRING,
+            },
+            work_center: {
+                type: DataTypes.STRING,
+            },
+            profit_center: {
+                type: DataTypes.STRING,
+            },
+            responsible_cost_center: {
+                type: DataTypes.STRING,
+            },
+            wbs_element: {
+                type: DataTypes.STRING,
+            },
+            cost_center: {
+                type: DataTypes.STRING,
+            },
+            maintance_plan: {
+                type: DataTypes.STRING,
+            },
+            foto_validasi: {
+                type: DataTypes.STRING,
+            },
+            approve_spv: {
                 type: DataTypes.STRING,
             },
         },
         {
-            tableName: "table_user",
+            tableName: "tr_temuan_h",
         }
     );
-    return tUser;
+    return tInput;
 };

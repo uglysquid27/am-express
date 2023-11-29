@@ -6,6 +6,7 @@ var cors = require('cors');
 var indexRouter = require('./routes/index');
 var tesRouter = require('./routes/tes');
 var prRouter = require('./routes/pr-router');
+var temuanH = require('./routes/temuan-router');
 var usersRouter = require('./routes/user-router');
 
 var app = express();
@@ -26,6 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/tes', tesRouter);
 app.use('/pr', prRouter);
+app.use('/temuan', temuanH);
 app.use('/users', usersRouter);
 
 module.exports = app;

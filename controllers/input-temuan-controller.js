@@ -1,8 +1,9 @@
 const { log } = require('console');
-const { input } = require('../models')
+// const { input } = require('../models')
 // const { Section_tab } = require('../models')
-const { Area_tab } = require('../models')
-const { vw_login } = require('../models');
+const { AreaTab } = require('../models/sms/area')
+const { vw_login } = require('../models/sms/table-user');
+const { tInput } = require('../models/sms/input-temuan');
 const fs = require('fs')
 
 module.exports = {
@@ -19,13 +20,13 @@ module.exports = {
     index: async (req, res) => {
         try {
             // Fetch data from the input model
-            const inputData = await input.findAll();
+            const inputData = await tInput.findAll();
             
             // Fetch data from the vw_login model
             const vwLoginData = await vw_login.findAll();
     
-            // Fetch data from the Area_tab model
-            const areaData = await Area_tab.findAll();
+            // Fetch data from the AreaTab model
+            const areaData = await AreaTab.findAll();
     
             // Create an array to store updated input data
             const updatedInputData = [];
@@ -105,7 +106,7 @@ module.exports = {
     
     section: async (req, res) => {
         try {
-            const sec = await Area_tab.findAll();
+            const sec = await AreaTab.findAll();
             console.log(sec)
             res.status(200).json(sec);
         } catch (e) {
@@ -115,7 +116,7 @@ module.exports = {
     },
     findById: async (req, res) => {
         try {
-            const pr = await input.findOne({
+            const pr = await tInput.findOne({
                 where: {
                     id: req.params.id,
                 },
@@ -135,7 +136,7 @@ module.exports = {
                 itemDescImgPath = `/uploads/${req.file.filename}`;
             }
 
-            const document = await input.create({
+            const document = await tInput.create({
                 req_date: req.body.req_date,
                 item_desc_img: itemDescImgPath,
                 item_desc: req.body.item_desc,
@@ -161,7 +162,7 @@ module.exports = {
     },
     delete: async (req, res) => {
         try {
-            const document = await input.findOne({
+            const document = await tInput.findOne({
                 where: {
                     id: req.params.id,
                 },
@@ -190,7 +191,7 @@ module.exports = {
                 itemDescImgPath = `/uploads/${req.file.filename}`;
             }
 
-            const document = await input.findOne({
+            const document = await tInput.findOne({
                 where: {
                     id: req.params.id,
                 },
@@ -206,7 +207,7 @@ module.exports = {
                 }
             }
 
-            const updateDocument = await input.update(
+            const updateDocument = await tInput.update(
                 {
                     req_date: req.body.req_date,
                     item_desc_img: itemDescImgPath,

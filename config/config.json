@@ -6,6 +6,13 @@
     "host": "192.168.9.47",
     "dialect": "mysql"
   },
+  "sap": {
+    "username": "iot_prod",
+    "password": "123456",
+    "database": "sap_master",
+    "host": "192.168.9.47",
+    "dialect": "mysql"
+  },
   "test": {
     "username": "usertable",
     "password": null,

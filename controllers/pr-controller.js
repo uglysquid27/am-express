@@ -1,6 +1,6 @@
 const { log } = require('console');
-const { Pr_monitoring } = require('../models')
-const { Section_tab } = require('../models')
+const { Pr_monitoring } = require('../models/sms/pr')
+const { SectionTab } = require('../models/sms/section')
 const fs = require('fs')
 
 module.exports = {
@@ -15,7 +15,7 @@ module.exports = {
     },
     section: async (req, res) => {
         try {
-            const sec = await Section_tab.findAll();
+            const sec = await SectionTab.findAll();
             console.log(sec)
             res.status(200).json(sec);
         } catch (e) {

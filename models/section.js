@@ -1,6 +1,8 @@
+const { iot_prod } = require('../config/connection');
+
 module.exports = function (sequelize, DataTypes) {
-    const sec = sequelize.define(
-        "Section_tab",
+    const SectionTab = iot_prod.define(
+        "section_tab",
         {
             id: {
                 allowNull: false,
@@ -31,5 +33,11 @@ module.exports = function (sequelize, DataTypes) {
             tableName: "mst_section",
         }
     );
-    return sec;
+    // Synchronize model dengan database
+    (async () => {
+        await iot_prod.sync();
+        // console.log('Model synchronized with database.');
+    })();
+    module.exports = { iot_prod, SectionTab };
 };
+ 

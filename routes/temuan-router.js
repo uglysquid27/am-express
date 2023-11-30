@@ -25,5 +25,7 @@ router.put('/update/:id', upload.single("item_desc_img"), temuanController.updat
 
 router.get('/qpgt', temuanController.qpgt);
 router.get('/qpcd', temuanController.qpcd);
+router.get('/qpct', temuanController.qpct);
+router.get('/crhd', temuanController.crhd);
 
 module.exports = router;

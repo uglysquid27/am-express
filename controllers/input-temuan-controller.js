@@ -1,6 +1,8 @@
 const { log } = require('console');
 // const { input } = require('../models')
 // const { Section_tab } = require('../models')
+const { crhd } = require('../models/sap_master/crhd')
+const { qpct } = require('../models/sap_master/qpct')
 const { qpgt } = require('../models/sap_master/qpgt')
 const { qpcd } = require('../models/sap_master/qpcd')
 const { AreaTab } = require('../models/sms/area')
@@ -130,6 +132,26 @@ module.exports = {
     qpcd: async (req, res) => {
         try {
             const sec = await qpcd.findAll();
+            console.log(sec)
+            res.status(200).json(sec);
+        } catch (e) {
+            console.log(e)
+            res.status(500).json(e)
+        }
+    },
+    qpct: async (req, res) => {
+        try {
+            const sec = await qpct.findAll();
+            console.log(sec)
+            res.status(200).json(sec);
+        } catch (e) {
+            console.log(e)
+            res.status(500).json(e)
+        }
+    },
+    crhd: async (req, res) => {
+        try {
+            const sec = await crhd.findAll();
             console.log(sec)
             res.status(200).json(sec);
         } catch (e) {

@@ -12,7 +12,7 @@ const { levelTab } = require('../models/sms/mst_level');
 const { kategoriTab } = require('../models/sms/mst_kategori');
 const { vw_login } = require('../models/sms/table-user');
 const { ifloxTab } = require('../models/sms/v_iflox');
-const { tInput } = require('../models/sms/input-temuan');
+const { tInput } = require('../models/sms/tr_temuan_h');
 const fs = require('fs')
 
 module.exports = {

@@ -3,7 +3,7 @@ var router = express.Router();
 const moment = require("moment");
 const path = require("path");
 const multer = require("multer");
-var temuanController = require("../controllers/input-temuan-controller")
+var temuanController = require("../controllers/tr-temuan-h-controller")
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {

@@ -7,6 +7,8 @@ const { qpct } = require('../models/sap_master/qpct')
 const { qpgt } = require('../models/sap_master/qpgt')
 const { qpcd } = require('../models/sap_master/qpcd')
 const { t024i } = require('../models/sap_master/t024i')
+const { t353i_t } = require('../models/sap_master/t353i_t')
+const { t357 } = require('../models/sap_master/t357')
 const { AreaTab } = require('../models/sms/area')
 const { vw_login } = require('../models/sms/table-user');
 const { tInput } = require('../models/sms/input-temuan');
@@ -27,31 +29,51 @@ module.exports = {
         try {
             // Fetch data from the input model
             const inputData = await tInput.findAll();
-            
+
             // Fetch data from the vw_login model
             const vwLoginData = await vw_login.findAll();
-    
+
             // Fetch data from the AreaTab model
             const areaData = await AreaTab.findAll();
-    
+
+            // Fetch data from the qpgt model
+            const qpgtData = await qpgt.findAll();
+
+            // Create an object mapping CODEGRUPPE values to KURZTEXT values
+            const codegruppeMap = {};
+            for (const qpgtItem of qpgtData) {
+                codegruppeMap[qpgtItem.CODEGRUPPE] = qpgtItem.KURZTEXT;
+            }
+
             // Create an array to store updated input data
             const updatedInputData = [];
-    
+
+            // Inside the loop where you update inputItem
             for (const inputItem of inputData) {
                 // Find a matching item in vwLoginData based on lg_nik and user columns
                 const matchingVwLogin = vwLoginData.find(vwLoginItem => vwLoginItem.lg_nik === inputItem.user);
-    
+            
                 // Find a matching item in areaData based on id_area
                 const matchingArea = areaData.find(areaItem => areaItem.id === inputItem.id_area);
-    
+            
                 if (matchingVwLogin && matchingArea) {
                     // Update the input model with lg_name from vw_login and area from Area_tab
                     inputItem.lg_name = matchingVwLogin.lg_name;
                     inputItem.area = matchingArea.area;
+            
+                    // Update object_part based on the combination of CODEGRUPPE and KURZTEXT values from qpgtData
+                    const codegruppeValue = inputItem.object_part;
+                    const matchingQpgtItem = qpgtData.find(qpgtItem => qpgtItem.CODEGRUPPE === codegruppeValue);
+            
+                    if (matchingQpgtItem) {
+                        inputItem.object_part = `${matchingQpgtItem.CODEGRUPPE}, ${matchingQpgtItem.KURZTEXT}`;
+                    }
+            
                     updatedInputData.push(inputItem);
                 }
             }
-    
+
+
             // Create a response JSON with the required fields
             const response = updatedInputData.map(item => ({
                 id: item.id,
@@ -101,15 +123,15 @@ module.exports = {
                 approve_spv: item.approve_spv,
                 // Add other fields as needed
             }));
-    
+
             res.status(200).json(response);
         } catch (e) {
             console.error(e);
             res.status(500).json(e);
         }
     },
-    
-    
+
+
     section: async (req, res) => {
         try {
             const sec = await AreaTab.findAll();
@@ -174,6 +196,26 @@ module.exports = {
     t024i: async (req, res) => {
         try {
             const sec = await t024i.findAll();
+            console.log(sec)
+            res.status(200).json(sec);
+        } catch (e) {
+            console.log(e)
+            res.status(500).json(e)
+        }
+    },
+    t353i_t: async (req, res) => {
+        try {
+            const sec = await t353i_t.findAll();
+            console.log(sec)
+            res.status(200).json(sec);
+        } catch (e) {
+            console.log(e)
+            res.status(500).json(e)
+        }
+    },
+    t357: async (req, res) => {
+        try {
+            const sec = await t357.findAll();
             console.log(sec)
             res.status(200).json(sec);
         } catch (e) {

@@ -1,15 +1,17 @@
 const { log } = require('console');
-const { crhd } = require('../models/sap_master/crhd')
-const { csks } = require('../models/sap_master/csks')
-const { qpct } = require('../models/sap_master/qpct')
-const { qpgt } = require('../models/sap_master/qpgt')
-const { qpcd } = require('../models/sap_master/qpcd')
-const { t024i } = require('../models/sap_master/t024i')
-const { t353i_t } = require('../models/sap_master/t353i_t')
-const { t357 } = require('../models/sap_master/t357')
-const { AreaTab } = require('../models/sms/mst_area')
-const { levelTab } = require('../models/sms/mst_level')
+const { crhd } = require('../models/sap_master/crhd');
+const { csks } = require('../models/sap_master/csks');
+const { qpct } = require('../models/sap_master/qpct');
+const { qpgt } = require('../models/sap_master/qpgt');
+const { qpcd } = require('../models/sap_master/qpcd');
+const { t024i } = require('../models/sap_master/t024i');
+const { t353i_t } = require('../models/sap_master/t353i_t');
+const { t357 } = require('../models/sap_master/t357');
+const { AreaTab } = require('../models/sms/mst_area');
+const { levelTab } = require('../models/sms/mst_level');
+const { kategoriTab } = require('../models/sms/mst_kategori');
 const { vw_login } = require('../models/sms/table-user');
+const { ifloxTab } = require('../models/sms/v_iflox');
 const { tInput } = require('../models/sms/input-temuan');
 const fs = require('fs')
 
@@ -23,6 +25,8 @@ module.exports = {
             const areaData = await AreaTab.findAll();
 
             const levelData = await levelTab.findAll();
+
+            const kategoriData = await kategoriTab.findAll();
 
             const qpgtData = await qpgt.findAll();
 
@@ -48,11 +52,14 @@ module.exports = {
 
                 const matchingLevel = levelData.find(levelItem => levelItem.id === inputItem.level);
 
-                if (matchingVwLogin && matchingArea) {
+                const matchingKategori = kategoriData.find(kategoriItem => kategoriItem.id === inputItem.kategori);
+
+                if (matchingVwLogin && matchingArea && matchingLevel && matchingKategori) {
                     
                     inputItem.lg_name = matchingVwLogin.lg_name;
                     inputItem.area = matchingArea.area;
                     inputItem.level = matchingLevel.level;
+                    inputItem.kategori = matchingKategori.kategori;
 
                    
                     const codegruppeValue = inputItem.object_part;
@@ -166,6 +173,16 @@ module.exports = {
         }
     },
 
+    iflox: async (req, res) => {
+        try {
+            const sec = await ifloxTab.findAll();
+            console.log(sec)
+            res.status(200).json(sec);
+        } catch (e) {
+            console.log(e)
+            res.status(500).json(e)
+        }
+    },
     qpgt: async (req, res) => {
         try {
             const sec = await qpgt.findAll();

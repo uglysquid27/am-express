@@ -31,5 +31,6 @@ router.get('/csks', temuanController.csks);
 router.get('/t024i', temuanController.t024i);
 router.get('/t353i_t', temuanController.t353i_t);
 router.get('/t357', temuanController.t357);
+router.get('/iflox', temuanController.iflox);
 
 module.exports = router;

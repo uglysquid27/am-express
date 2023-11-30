@@ -45,6 +45,16 @@ module.exports = {
                 codegruppeMap[qpgtItem.CODEGRUPPE] = qpgtItem.KURZTEXT;
             }
 
+            // Fetch data from the qpct model
+            const qpctData = await qpct.findAll();
+
+            // Create an object mapping CODE values to KURZTEXT values in qpctData
+            const codeMap = {};
+            for (const qpctItem of qpctData) {
+                const codeKey = `${qpctItem.CODEGRUPPE}_${qpctItem.CODE}`;
+                codeMap[codeKey] = qpctItem.KURZTEXT;
+            }
+
             // Create an array to store updated input data
             const updatedInputData = [];
 
@@ -52,26 +62,62 @@ module.exports = {
             for (const inputItem of inputData) {
                 // Find a matching item in vwLoginData based on lg_nik and user columns
                 const matchingVwLogin = vwLoginData.find(vwLoginItem => vwLoginItem.lg_nik === inputItem.user);
-            
+
                 // Find a matching item in areaData based on id_area
                 const matchingArea = areaData.find(areaItem => areaItem.id === inputItem.id_area);
-            
+
                 if (matchingVwLogin && matchingArea) {
                     // Update the input model with lg_name from vw_login and area from Area_tab
                     inputItem.lg_name = matchingVwLogin.lg_name;
                     inputItem.area = matchingArea.area;
-            
+
                     // Update object_part based on the combination of CODEGRUPPE and KURZTEXT values from qpgtData
                     const codegruppeValue = inputItem.object_part;
                     const matchingQpgtItem = qpgtData.find(qpgtItem => qpgtItem.CODEGRUPPE === codegruppeValue);
-            
+
                     if (matchingQpgtItem) {
                         inputItem.object_part = `${matchingQpgtItem.CODEGRUPPE}, ${matchingQpgtItem.KURZTEXT}`;
                     }
-            
+
+                    // Update ob_detail based on the combination of CODE and KURZTEXT values from qpctData
+                    const codeValue = inputItem.ob_detail; // Assuming you have a field ob_detail to store the CODE value
+                    const codeKey = `${codegruppeValue}_${codeValue}`;
+                    if (codeMap[codeKey]) {
+                        inputItem.ob_detail = `${codeValue}, ${codeMap[codeKey]}`;
+                    }
+
+                    // Update damage based on the combination of CODEGRUPPE and KURZTEXT values from qpgtData
+                    const damageValue = inputItem.damage; // Assuming you have a field damage to store the CODEGRUPPE value
+                    const matchingQpgtItemDmg = qpgtData.find(qpgtItem => qpgtItem.CODEGRUPPE === damageValue);
+                    if (matchingQpgtItemDmg) {
+                        inputItem.damage = `${matchingQpgtItemDmg.CODEGRUPPE}, ${matchingQpgtItemDmg.KURZTEXT}`;
+                    }
+
+                    // Update d_detail based on the combination of CODE and KURZTEXT values from qpctData
+                    const dDetailValue = inputItem.d_detail; // Assuming you have a field d_detail to store the CODE value
+                    const dDetailKey = `${codegruppeValue}_${dDetailValue}`;
+                    if (codeMap[dDetailKey]) {
+                        inputItem.d_detail = `${dDetailValue}, ${codeMap[dDetailKey]}`;
+                    }
+
+                    // Update cause_code based on the combination of CODEGRUPPE and KURZTEXT values from qpgtData
+                    const causeCodeValue = inputItem.cause_code; // Assuming you have a field cause_code to store the CODEGRUPPE value
+                    const matchingQpgtItemCc = qpgtData.find(qpgtItem => qpgtItem.CODEGRUPPE === causeCodeValue);
+                    if (matchingQpgtItemCc) {
+                        inputItem.cause_code = `${matchingQpgtItemCc.CODEGRUPPE}, ${matchingQpgtItemCc.KURZTEXT}`;
+                    }
+
+                    // Update cc_detail based on the combination of CODE and KURZTEXT values from qpctData
+                    const ccDetailValue = inputItem.cc_detail; // Assuming you have a field cc_detail to store the CODE value
+                    const ccDetailKey = `${codegruppeValue}_${ccDetailValue}`;
+                    if (codeMap[ccDetailKey]) {
+                        inputItem.cc_detail = `${ccDetailValue}, ${codeMap[ccDetailKey]}`;
+                    }
+
                     updatedInputData.push(inputItem);
                 }
             }
+
 
 
             // Create a response JSON with the required fields

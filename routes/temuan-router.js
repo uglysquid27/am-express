@@ -27,5 +27,7 @@ router.get('/qpgt', temuanController.qpgt);
 router.get('/qpcd', temuanController.qpcd);
 router.get('/qpct', temuanController.qpct);
 router.get('/crhd', temuanController.crhd);
+router.get('/csks', temuanController.csks);
+router.get('/t024i', temuanController.t024i);
 
 module.exports = router;

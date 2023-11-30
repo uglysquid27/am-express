@@ -2,9 +2,11 @@ const { log } = require('console');
 // const { input } = require('../models')
 // const { Section_tab } = require('../models')
 const { crhd } = require('../models/sap_master/crhd')
+const { csks } = require('../models/sap_master/csks')
 const { qpct } = require('../models/sap_master/qpct')
 const { qpgt } = require('../models/sap_master/qpgt')
 const { qpcd } = require('../models/sap_master/qpcd')
+const { t024i } = require('../models/sap_master/t024i')
 const { AreaTab } = require('../models/sms/area')
 const { vw_login } = require('../models/sms/table-user');
 const { tInput } = require('../models/sms/input-temuan');
@@ -152,6 +154,26 @@ module.exports = {
     crhd: async (req, res) => {
         try {
             const sec = await crhd.findAll();
+            console.log(sec)
+            res.status(200).json(sec);
+        } catch (e) {
+            console.log(e)
+            res.status(500).json(e)
+        }
+    },
+    csks: async (req, res) => {
+        try {
+            const sec = await csks.findAll();
+            console.log(sec)
+            res.status(200).json(sec);
+        } catch (e) {
+            console.log(e)
+            res.status(500).json(e)
+        }
+    },
+    t024i: async (req, res) => {
+        try {
+            const sec = await t024i.findAll();
             console.log(sec)
             res.status(200).json(sec);
         } catch (e) {

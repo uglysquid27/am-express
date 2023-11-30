@@ -1,6 +1,6 @@
 const { log } = require('console');
 const { Pr_monitoring } = require('../models/sms/pr')
-const { SectionTab } = require('../models/sms/section')
+const { SectionTab } = require('../models/sms/mst_section')
 const fs = require('fs')
 
 module.exports = {

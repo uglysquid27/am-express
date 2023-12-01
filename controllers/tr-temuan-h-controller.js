@@ -6,12 +6,12 @@ const { qpgt } = require('../models/sap_master/qpgt');
 const { qpcd } = require('../models/sap_master/qpcd');
 const { t024i } = require('../models/sap_master/t024i');
 const { t353i_t } = require('../models/sap_master/t353i_t');
+const { iflotx } = require('../models/sap_master/ifloxt');
 const { t357 } = require('../models/sap_master/t357');
 const { AreaTab } = require('../models/sms/mst_area');
 const { levelTab } = require('../models/sms/mst_level');
 const { kategoriTab } = require('../models/sms/mst_kategori');
 const { vw_login } = require('../models/sms/table-user');
-const { ifloxTab } = require('../models/sms/v_iflox');
 const { tInput } = require('../models/sms/tr_temuan_h');
 const fs = require('fs')
 
@@ -28,19 +28,26 @@ module.exports = {
 
             const kategoriData = await kategoriTab.findAll();
 
-            const qpgtData = await qpgt.findAll();
+            const qpgtData = await qpgt.findAll({ attributes: ['KATALOGART', 'CODEGRUPPE', 'SPRACHE', 'KURZTEXT']});
 
             const codegruppeMap = {};
             for (const qpgtItem of qpgtData) {
                 codegruppeMap[qpgtItem.CODEGRUPPE] = qpgtItem.KURZTEXT;
             }
 
-            const qpctData = await qpct.findAll();
+            const qpctData = await qpct.findAll({attributes: ['KATALOGART', 'CODEGRUPPE', 'SPRACHE', 'CODE', 'VERSION', 'KURZTEXT']});
 
             const codeMap = {};
             for (const qpctItem of qpctData) {
                 const codeKey = `${qpctItem.CODEGRUPPE}_${qpctItem.CODE}`;
                 codeMap[codeKey] = qpctItem.KURZTEXT;
+            }
+
+            const ifloxData = await iflotx.findAll({attributes: ['TPLNR', 'PLTXT', 'PLTXU']});
+
+            const ifloxMap = {};
+            for (const ifloxItem of ifloxData) {
+                ifloxMap[ifloxItem.TPLNR] = ifloxItem.PLTXT;
             }
 
             const updatedInputData = [];
@@ -74,6 +81,12 @@ module.exports = {
                     const codeKey = `${codegruppeValue}_${codeValue}`;
                     if (codeMap[codeKey]) {
                         inputItem.ob_detail = `${codeValue}, ${codeMap[codeKey]}`;
+                    }
+
+                    const ifloxValue = inputItem.func_loc; 
+                    const matchingItemIflox = ifloxData.find(ifloxItem => ifloxItem.TPLNR === ifloxValue);
+                    if (matchingItemIflox) {
+                        inputItem.func_loc = `${matchingItemIflox.TPLNR}, ${matchingItemIflox.PLTXT}`;
                     }
 
                     const damageValue = inputItem.damage; 
@@ -173,19 +186,9 @@ module.exports = {
         }
     },
 
-    iflox: async (req, res) => {
-        try {
-            const sec = await ifloxTab.findAll();
-            console.log(sec)
-            res.status(200).json(sec);
-        } catch (e) {
-            console.log(e)
-            res.status(500).json(e)
-        }
-    },
     qpgt: async (req, res) => {
         try {
-            const sec = await qpgt.findAll();
+            const sec = await qpgt.findAll({attributes: ['KATALOGART', 'CODEGRUPPE', 'SPRACHE']});
             console.log(sec)
             res.status(200).json(sec);
         } catch (e) {
@@ -193,19 +196,10 @@ module.exports = {
             res.status(500).json(e)
         }
     },
-    qpcd: async (req, res) => {
-        try {
-            const sec = await qpcd.findAll();
-            console.log(sec)
-            res.status(200).json(sec);
-        } catch (e) {
-            console.log(e)
-            res.status(500).json(e)
-        }
-    },
+
     qpct: async (req, res) => {
         try {
-            const sec = await qpct.findAll();
+            const sec = await qpct.findAll({attributes: ['KATALOGART', 'CODEGRUPPE', 'SPRACHE', 'CODE', 'VERSION']});
             console.log(sec)
             res.status(200).json(sec);
         } catch (e) {
@@ -213,56 +207,7 @@ module.exports = {
             res.status(500).json(e)
         }
     },
-    crhd: async (req, res) => {
-        try {
-            const sec = await crhd.findAll();
-            console.log(sec)
-            res.status(200).json(sec);
-        } catch (e) {
-            console.log(e)
-            res.status(500).json(e)
-        }
-    },
-    csks: async (req, res) => {
-        try {
-            const sec = await csks.findAll();
-            console.log(sec)
-            res.status(200).json(sec);
-        } catch (e) {
-            console.log(e)
-            res.status(500).json(e)
-        }
-    },
-    t024i: async (req, res) => {
-        try {
-            const sec = await t024i.findAll();
-            console.log(sec)
-            res.status(200).json(sec);
-        } catch (e) {
-            console.log(e)
-            res.status(500).json(e)
-        }
-    },
-    t353i_t: async (req, res) => {
-        try {
-            const sec = await t353i_t.findAll();
-            console.log(sec)
-            res.status(200).json(sec);
-        } catch (e) {
-            console.log(e)
-            res.status(500).json(e)
-        }
-    },
-    t357: async (req, res) => {
-        try {
-            const sec = await t357.findAll();
-            console.log(sec)
-            res.status(200).json(sec);
-        } catch (e) {
-            console.log(e)
-            res.status(500).json(e)
-        }
-    },
+   
     findById: async (req, res) => {
         try {
             const pr = await tInput.findOne({

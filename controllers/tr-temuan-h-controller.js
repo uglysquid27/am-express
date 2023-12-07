@@ -9,6 +9,7 @@ const { t353i_t } = require('../models/sap_master/t353i_t');
 const { iflotx } = require('../models/sap_master/ifloxt');
 const { t357 } = require('../models/sap_master/t357');
 const { AreaTab } = require('../models/sms/mst_area');
+const { SectionTab } = require('../models/sms/mst_section');
 const { levelTab } = require('../models/sms/mst_level');
 const { kategoriTab } = require('../models/sms/mst_kategori');
 const { vw_login } = require('../models/sms/table-user');
@@ -23,6 +24,8 @@ module.exports = {
             const vwLoginData = await vw_login.findAll();
 
             const areaData = await AreaTab.findAll();
+
+            const sectionData = await SectionTab.findAll();
 
             const levelData = await levelTab.findAll();
 
@@ -53,9 +56,12 @@ module.exports = {
             const updatedInputData = [];
 
             for (const inputItem of inputData) {
+                
                 const matchingVwLogin = vwLoginData.find(vwLoginItem => vwLoginItem.lg_nik === inputItem.user);
 
                 const matchingArea = areaData.find(areaItem => areaItem.id === inputItem.id_area);
+
+                const matchingSection = sectionData.find(sectionItem => sectionItem.id === inputItem.id_section);
 
                 const matchingLevel = levelData.find(levelItem => levelItem.id === inputItem.level);
 
@@ -65,6 +71,7 @@ module.exports = {
                     
                     inputItem.lg_name = matchingVwLogin.lg_name;
                     inputItem.area = matchingArea.area;
+                    inputItem.section = matchingSection.section;
                     inputItem.level = matchingLevel.level;
                     inputItem.kategori = matchingKategori.kategori;
 
@@ -78,7 +85,7 @@ module.exports = {
 
                    
                     const codeValue = inputItem.ob_detail; 
-                    const codeKey = `${codegruppeValue}_${codeValue}`;
+                    const codeKey = `${codegruppeValue}_${codeValue}`; 
                     if (codeMap[codeKey]) {
                         inputItem.ob_detail = `${codeValue}, ${codeMap[codeKey]}`;
                     }
@@ -126,6 +133,7 @@ module.exports = {
                 photo: item.photo,
                 tanggal_temuan: item.tanggal_temuan,
                 id_area: item.area, 
+                id_section: item.section, 
                 func_loc: item.func_loc,
                 object_part: item.object_part,
                 ob_detail: item.ob_detail,
@@ -238,6 +246,7 @@ module.exports = {
                 photo: item.photo,
                 tanggal_temuan: item.tanggal_temuan,
                 id_area: item.area, 
+                id_section: item.section, 
                 func_loc: item.func_loc,
                 object_part: item.object_part,
                 ob_detail: item.ob_detail,
@@ -250,7 +259,7 @@ module.exports = {
                 scope: item.scope,
                 status: item.status,
                 last_update: item.last_update,
-                note: item.note,
+                note: item.note, 
                 approve_by: item.approve_by,
                 approve_date: item.approve_date,
                 schedule: item.schedule,

@@ -28,6 +28,9 @@ const { DataTypes } = require('sequelize');
             id_area: {
                 type: DataTypes.INTEGER,
             },
+            id_section: {
+                type: DataTypes.INTEGER,
+            },
             func_loc: {
                 type: DataTypes.INTEGER,
             },

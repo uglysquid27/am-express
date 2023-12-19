@@ -55,6 +55,12 @@ const { DataTypes } = require('sequelize');
         keterangan: {
           type: DataTypes.STRING,
         },
+        attachment: {
+          type: DataTypes.STRING,
+        },
+        attachment2: {
+          type: DataTypes.STRING,
+        },
       },
       {
         tableName: "mst_pr",

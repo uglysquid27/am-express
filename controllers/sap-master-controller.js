@@ -44,5 +44,5 @@ module.exports = {
         } catch (e) {
             res.status(500).json(e)
         }
-    },
+    }, 
 } 

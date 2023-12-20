@@ -39,6 +39,7 @@ module.exports = {
         try {
           let itemDescImgPath = '';
           let attachmentPath = '';
+          let attachment2Path = '';
           
           if (req.files['item_desc_img'] && req.files['item_desc_img'][0]) {
             itemDescImgPath = `/uploads/${req.files['item_desc_img'][0].filename}`;
@@ -46,6 +47,9 @@ module.exports = {
       
           if (req.files['attachment'] && req.files['attachment'][0]) {
             attachmentPath = `/uploads/${req.files['attachment'][0].filename}`;
+          }
+          if (req.files['attachment2'] && req.files['attachment'][0]) {
+            attachment2Path = `/uploads/${req.files['attachment2'][0].filename}`;
           }
       
           // Create a new document in the database
@@ -66,7 +70,7 @@ module.exports = {
             bidding: req.body.bidding,
             keterangan: req.body.keterangan,
             attachment: attachmentPath,
-            attachment2: req.body.attachment2,
+            attachment2: attachment2Path,
           });
       
           // Respond with the created document

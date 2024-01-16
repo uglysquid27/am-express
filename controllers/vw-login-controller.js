@@ -33,13 +33,13 @@ module.exports = {
     },
     indexById: async (req, res) => {
         try {
+        //    return res.json(req.params.id)
             // Fetch data from Login model based on id
             const loginData = await userLevel.findOne({
                 where: {
-                    id: req.params.id,
+                    lg_nik: req.params.id,
                 },
             });
-    
             // If no data found for the given id, handle it accordingly (send an error response or something)
             if (!loginData) {
                 return res.status(404).json({ error: 'Login data not found for the given id' });
@@ -68,7 +68,7 @@ module.exports = {
             res.status(500).json({ error: 'Internal Server Error' });
         }
     },
-    update: async (req, res) => {
+    update: async (req, res) => { 
         
         try {
             console.log(req.body)

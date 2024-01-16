@@ -61,6 +61,12 @@ const { DataTypes } = require('sequelize');
         attachment2: {
           type: DataTypes.STRING,
         },
+        v_inputDate: {
+          type: DataTypes.STRING,
+        },
+        v2_inputDate: {
+          type: DataTypes.STRING,
+        }
       },
       {
         tableName: "mst_pr",

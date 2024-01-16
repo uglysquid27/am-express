@@ -40,15 +40,19 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 /* GET home page. */
-router.get('/', prController.index);
+router.get('/', prController.index); 
 router.get('/get/:id', prController.findById);
 router.get('/sect', prController.section);
 router.delete("/delete/:id", prController.delete);
 router.post('/store',  upload.fields([
   { name: 'item_desc_img', maxCount: 1 },
-  { name: 'attachment', maxCount: 1 },
+  { name: 'attachment', maxCount: 1 },  
   { name: 'attachment2', maxCount: 1 },
 ]), prController.store);
-router.put('/update/:id', upload.single("item_desc_img"), prController.update);
+router.put('/update/:id', upload.fields([
+  { name: 'item_desc_img', maxCount: 1 },
+  { name: 'attachment', maxCount: 1 },  
+  { name: 'attachment2', maxCount: 1 },
+]), prController.update);
 
 module.exports = router;

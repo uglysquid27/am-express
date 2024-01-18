@@ -1,6 +1,7 @@
 const { log } = require('console');
 const { Pr_monitoring } = require('../models/sms/pr')
 const { SectionTab } = require('../models/sms/mst_section')
+const { lfa1 } = require('../models/sap_master/lfa')
 const fs = require('fs')
 
 module.exports = {
@@ -16,6 +17,16 @@ module.exports = {
     section: async (req, res) => {
         try {
             const sec = await SectionTab.findAll();
+            console.log(sec)
+            res.status(200).json(sec);
+        } catch (e) {
+            res.status(500).json(e)
+        }
+    },
+    vendor: async (req, res) => {
+        try {
+            // return res.json('karep')
+            const sec = await lfa1.findAll({attributes: ['LIFNR', 'NAME1', 'ADRNR', 'KUNNR']});
             console.log(sec)
             res.status(200).json(sec);
         } catch (e) {

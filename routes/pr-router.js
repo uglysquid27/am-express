@@ -43,6 +43,7 @@ const upload = multer({ storage: storage });
 router.get('/', prController.index); 
 router.get('/get/:id', prController.findById);
 router.get('/sect', prController.section);
+router.get('/vendor', prController.vendor);
 router.delete("/delete/:id", prController.delete);
 router.post('/store',  upload.fields([
   { name: 'item_desc_img', maxCount: 1 },

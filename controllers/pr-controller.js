@@ -7,7 +7,9 @@ const fs = require('fs')
 module.exports = {
     index: async (req, res) => {
         try {
-            const pr = await Pr_monitoring.findAll();
+            const pr = await Pr_monitoring.findAll({
+                 order: [['createdAt', 'DESC']],
+            });
             console.log(pr)
             res.status(200).json(pr);
         } catch (e) {
